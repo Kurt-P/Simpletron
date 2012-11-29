@@ -8,6 +8,7 @@ import java.util.Scanner;
 import edu.KurtP.Simpletron.SimpletronOperationCodes;
 import edu.KurtP.Simpletron.SimpletronAccumlator;
 import edu.KurtP.Simpletron.SimpletronInstructionRegulatiors;
+import edu.KurtP.Simpletron.MainMemory;
 
 /**
  * @author kurtprudhomme
@@ -16,9 +17,9 @@ import edu.KurtP.Simpletron.SimpletronInstructionRegulatiors;
 public class Simpletron {
 
     private int[] memory = new int[100];
-    private String string = "";
 
-    private int instructionCounter, instructionRegister = 0;
+    private int instructionCounter = 0;
+    private int instructionRegister = 0;
 
     private int operationCode, operand;
 
@@ -38,21 +39,25 @@ public class Simpletron {
 
 //        do {
 //            System.out.printf("%02d ? ", SimpletronInstructionRegulatiors.getInstructionCounter());
-//            instructionInput = scanner.nextInt();
-//            memory[SimpletronInstructionRegulatiors.getInstructionCounter()] = instructionInput;
-//            SimpletronInstructionRegulatiors.setInstructionRegister(memory[SimpletronInstructionRegulatiors.getInstructionCounter()]);
-//            SimpletronInstructionRegulatiors.incrementInstructionCounter();
+//            instructionInput = codeInputter.nextInt();
+////            memory[memoryPointer] = instructionInput;
+//            MainMemory.setMemoryAtLocation(MainMemory.getMemoryPointer(), instructionInput);
+////            memoryPointer++;
+//            MainMemory.incrementMemoryPointer();
 //        }
 //        while (instructionInput != -99999);
 
         do {
             //Output the code input prompt
-            System.out.printf("%02d ? ", SimpletronInstructionRegulatiors.getInstructionCounter());
+//            System.out.printf("%02d ? ", SimpletronInstructionRegulatiors.getInstructionCounter());
+            System.out.printf("%02d ? ", memoryPointer);
             //Take the user input and assign it to the input var.
             instructionInput = codeInputter.nextInt();
 
             //place the input into the correct memory location
             memory[memoryPointer] = instructionInput;
+            
+            //Increment the pointer by one
             memoryPointer++;
         }
         while (instructionInput != -99999);
@@ -61,6 +66,11 @@ public class Simpletron {
             loadCode();
             operations(operationCode, operand);
         }
+        
+//        for (int code : MainMemory.getMemory()) {
+//            loadCode();
+//            operations(operationCode, operand);
+//        }
     }
 
     private void loadCode() {
@@ -68,6 +78,8 @@ public class Simpletron {
 //        operand = memory[SimpletronInstructionRegulatiors.getInstructionCounter()] % 100;
         operationCode = memory[instructionCounter] / 100;
         operand = memory[instructionCounter] % 100;
+//        operationCode = MainMemory.getMemoryFromLocation(instructionCounter) / 100;
+//        operand = MainMemory.getMemoryFromLocation(instructionCounter) % 100;
     }
 
     private void operations(int operationCode, int operand) {
@@ -80,11 +92,13 @@ public class Simpletron {
                 System.out.print("Enter a number: ");
                 int number = read.nextInt();
                 memory[operand] = number;
+//                MainMemory.setMemoryAtLocation(operand, number);
                 break;
 
             //Operations for outputting to the user
             case SimpletronOperationCodes.WRITE :
                 System.out.println(memory[operand]);
+//                System.out.println(MainMemory.getMemoryFromLocation(operand));
                 break;
         } //End switch
 
