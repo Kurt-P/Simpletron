@@ -2,12 +2,12 @@ package edu.KurtP.Simpletron;
 
 /**
  * @author Kurt P
- * @version 0.0.11282012
+ * @version 0.0.11292012
  */
 public class MainMemory {
     private static int[] memory = new int[100];
     private static int memoryPointer = 0;
-    
+
 //    protected MainMemory() {
 //        memory = new int[100];
 //    }
@@ -15,7 +15,7 @@ public class MainMemory {
     protected static void incrementMemoryPointer() {
         memoryPointer++;
     }
-    
+
     /**
      * @return the memory
      */
@@ -36,11 +36,11 @@ public class MainMemory {
     protected static int getMemoryPointer() {
         return memoryPointer;
     }
-    
+
     protected static int getMemorySize() {
         return memory.length;
     }
-    
+
     protected static int[] getMemory() {
         return memory;
     }

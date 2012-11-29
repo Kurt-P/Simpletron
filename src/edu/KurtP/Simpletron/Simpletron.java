@@ -5,14 +5,10 @@
 package edu.KurtP.Simpletron;
 
 import java.util.Scanner;
-import edu.KurtP.Simpletron.SimpletronOperationCodes;
-import edu.KurtP.Simpletron.SimpletronAccumlator;
-import edu.KurtP.Simpletron.SimpletronInstructionRegulatiors;
-import edu.KurtP.Simpletron.MainMemory;
 
 /**
  * @author kurtprudhomme
- * @version 0.1.11282012
+ * @version 0.1.11292012
  */
 public class Simpletron {
 
@@ -53,20 +49,25 @@ public class Simpletron {
             System.out.printf("%02d ? ", memoryPointer);
             //Take the user input and assign it to the input var.
             instructionInput = codeInputter.nextInt();
+//            if (instructionInput == -99999) {
+//                break;
+//            }
 
             //place the input into the correct memory location
             memory[memoryPointer] = instructionInput;
-            
+
             //Increment the pointer by one
             memoryPointer++;
         }
         while (instructionInput != -99999);
 
         for (int code : memory) {
-            loadCode();
-            operations(operationCode, operand);
+            if (code != 0) {
+                loadCode();
+                operations(operationCode, operand);
+            }
         }
-        
+
 //        for (int code : MainMemory.getMemory()) {
 //            loadCode();
 //            operations(operationCode, operand);
@@ -84,10 +85,10 @@ public class Simpletron {
 
     private void operations(int operationCode, int operand) {
 
-        switch(operationCode) { //Start switch
+        switch (operationCode) { //Start switch
 
             //Operations for reading input from the user
-            case SimpletronOperationCodes.READ :
+            case SimpletronOperationCodes.READ:
                 Scanner read = new Scanner(System.in);
                 System.out.print("Enter a number: ");
                 int number = read.nextInt();
@@ -96,10 +97,54 @@ public class Simpletron {
                 break;
 
             //Operations for outputting to the user
-            case SimpletronOperationCodes.WRITE :
+            case SimpletronOperationCodes.WRITE:
                 System.out.println(memory[operand]);
 //                System.out.println(MainMemory.getMemoryFromLocation(operand));
                 break;
+
+            case SimpletronOperationCodes.LOAD:
+                break;
+
+            case SimpletronOperationCodes.STORE:
+                break;
+
+            case SimpletronOperationCodes.ADD:
+                break;
+
+            case SimpletronOperationCodes.SUBTRACT:
+                break;
+
+            case SimpletronOperationCodes.DIVIDE:
+                break;
+
+            case SimpletronOperationCodes.MULITPLY:
+                break;
+
+            case SimpletronOperationCodes.BRANCH:
+                break;
+
+            case SimpletronOperationCodes.BRANCHING:
+                break;
+
+            case SimpletronOperationCodes.BRANCHZERO:
+                break;
+
+            case SimpletronOperationCodes.HALT:
+                break;
+
+            case SimpletronOperationCodes.AND:
+                break;
+
+            case SimpletronOperationCodes.OR:
+                break;
+
+            case SimpletronOperationCodes.XOR:
+                break;
+
+            default:
+                System.out.println("*** INVALID OPERATION ***");
+                System.out.println("***    EXITING NOW!   ***");
+                System.exit(-1);
         } //End switch
 
 //        SimpletronInstructionRegulatiors.incrementInstructionCounter();
