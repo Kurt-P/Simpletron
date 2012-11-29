@@ -5,22 +5,21 @@ package edu.KurtP.Simpletron;
  * @version 0.0.11282012
  */
 public class MainMemory {
-    private int[] memory;
-    
-    public MainMemory(int size) {
-        memory = new int[size];
+    private static int[] memory;
+
+    /**
+     * @return the memory
+     */
+    protected static int[] getMemory() {
+        return memory;
     }
-    
-    public int getMemory() {
-        return memory.length;
+
+    /**
+     * @param aMemory the memory to set
+     */
+    protected static void setMemory(int[] aMemory) {
+        memory = aMemory;
     }
+
     
-    public void addToMemory(int i, int location) {
-        memory[location] = i;
-    }
-    
-    public int readFromMemory(int location) {
-        int i = memory[location];
-        return i;
-    }
 }
