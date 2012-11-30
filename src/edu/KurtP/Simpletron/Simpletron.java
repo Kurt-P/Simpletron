@@ -14,6 +14,10 @@ public class Simpletron {
 
     private int[] memory = new int[100];
 
+    private boolean run = true;
+
+    private int accumulator = 0;
+
     private int instructionCounter = 0;
     private int instructionRegister = 0;
 
@@ -21,7 +25,7 @@ public class Simpletron {
 
     public void welcomeMessage() {
         System.out.println("***            Welcome to Simpletron!           ***");
-        System.out.println("*** Please enter your program one instruction   ***");
+        System.out.println("*** Please enter your program, one instruction  ***");
         System.out.println("*** (or data word) at a time. I will display    ***");
         System.out.println("*** the location number and a question mark (?) ***");
         System.out.println("*** You then type the word for that location.   ***");
@@ -45,45 +49,39 @@ public class Simpletron {
 
         do {
             //Output the code input prompt
-//            System.out.printf("%02d ? ", SimpletronInstructionRegulatiors.getInstructionCounter());
             System.out.printf("%02d ? ", memoryPointer);
             //Take the user input and assign it to the input var.
             instructionInput = codeInputter.nextInt();
-//            if (instructionInput == -99999) {
-//                break;
-//            }
-
             //place the input into the correct memory location
             memory[memoryPointer] = instructionInput;
-
             //Increment the pointer by one
             memoryPointer++;
         }
         while (instructionInput != -99999);
 
-        for (int code : memory) {
-            if (code != 0) {
-                loadCode();
-                operations(operationCode, operand);
-            }
+        System.out.printf("\n%s\n%s\n\n", "***  Program loading complete ***",
+                "*** Program excution begins ***");
+
+        while (run) {
+            loadCode();
+            operations(operationCode, operand);
         }
 
-//        for (int code : MainMemory.getMemory()) {
-//            loadCode();
-//            operations(operationCode, operand);
-//        }
+        System.exit(0);
     }
 
     private void loadCode() {
+        instructionRegister = memory[instructionCounter];
 //        operationCode = memory[SimpletronInstructionRegulatiors.getInstructionCounter()] / 100;
 //        operand = memory[SimpletronInstructionRegulatiors.getInstructionCounter()] % 100;
-        operationCode = memory[instructionCounter] / 100;
-        operand = memory[instructionCounter] % 100;
+        operationCode = instructionRegister / 100;
+        operand = instructionRegister % 100;
 //        operationCode = MainMemory.getMemoryFromLocation(instructionCounter) / 100;
 //        operand = MainMemory.getMemoryFromLocation(instructionCounter) % 100;
     }
 
     private void operations(int operationCode, int operand) {
+        boolean branching = false;
 
         switch (operationCode) { //Start switch
 
@@ -102,34 +100,70 @@ public class Simpletron {
 //                System.out.println(MainMemory.getMemoryFromLocation(operand));
                 break;
 
+            //Load the value found in memory into the accumulator
             case SimpletronOperationCodes.LOAD:
+                accumulator = memory[operand];
                 break;
 
+            //Put the value in the accumlator in to memroy
             case SimpletronOperationCodes.STORE:
+                memory[operand] = accumulator;
                 break;
 
+            //Add the value in the accumulator and a value from memroy
             case SimpletronOperationCodes.ADD:
+                accumulator += memory[operand];
                 break;
 
+            //Subtract the value in the accumulator and a value in memory
             case SimpletronOperationCodes.SUBTRACT:
+                accumulator -= memory[operand];
                 break;
 
+            //Divide the value in the accumulator by a value in memory
             case SimpletronOperationCodes.DIVIDE:
-                break;
+                //Can't divide by zero.
+                if (memory[operand] == 0) {
+                    System.out.printf("\n%s\n%s\n", "*** CANNOT DIVIDE BY ZERO ***", "EXITING NOW ***");
+                    System.exit(0);
+                }
+                else {
+                    accumulator /= memory[operand];
+                    break;
+                }
 
+            //Mulitply the value in the accumulator by a value in memory
             case SimpletronOperationCodes.MULITPLY:
+                accumulator *= memory[operand];
                 break;
 
+            //Branc to a specific memory location
             case SimpletronOperationCodes.BRANCH:
+                instructionCounter = operand;
+                branching = true;
                 break;
 
+            //Branch to a memory location if the accumulator is less than zero
             case SimpletronOperationCodes.BRANCHING:
+                if (accumulator < 0) {
+                    instructionCounter = operand;
+                }
+                branching = true;
                 break;
 
+            //Branch to a memroy location if the accumulator is zero
             case SimpletronOperationCodes.BRANCHZERO:
+                if(accumulator == 0) {
+                    instructionCounter = operand;
+                }
+                branching = true;
                 break;
 
+            //Finsh processing
             case SimpletronOperationCodes.HALT:
+                System.out.println("Processing complete...");
+//                System.exit(0);
+                run = false;
                 break;
 
             case SimpletronOperationCodes.AND:
@@ -141,13 +175,21 @@ public class Simpletron {
             case SimpletronOperationCodes.XOR:
                 break;
 
-            default:
-                System.out.println("*** INVALID OPERATION ***");
-                System.out.println("***    EXITING NOW!   ***");
-                System.exit(-1);
+//            default:
+//                System.out.println("*** INVALID OPERATION ***");
+//                System.out.println("***    EXITING NOW!   ***");
+//                System.exit(-1);
         } //End switch
 
 //        SimpletronInstructionRegulatiors.incrementInstructionCounter();
-        instructionCounter++;
+        /*
+         * While I was testing, I noticed that if I neede to branch to a lower
+         * memory location, the instruction counter would will increment. To
+         * solvie this issue I added the boolean 'branch' var. Only when the
+         * Simpletron is not branching, will the counter increment.
+         */
+        if (!branching) {
+            instructionCounter++;
+        }
     }
 }
