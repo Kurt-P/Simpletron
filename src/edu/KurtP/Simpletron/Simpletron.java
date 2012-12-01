@@ -4,24 +4,40 @@ import java.util.Scanner;
 
 /**
  * @author kurtprudhomme
- * @version 0.2.12012012
+ * @version 0.2.1.12012012
  */
 public class Simpletron {
 
+    /*
+     * I'm keeping these variables, so that later when this assignment is done 
+     * I can come back, remove the unneeded classes and still have a working 
+     * project.
+     */
 //    private int[] memory = new int[100];
 //    private int accumulator;
     private int instructionCounter;
     private int instructionRegister;
     private int operationCode;
     private int operand;
-
     private boolean run = true;
 
+    /**
+     * The
+     * <code>run</code> method will start Simpletron, display the welcome
+     * message and then go strait into SML execution.
+     *
+     * @return void
+     */
     public void run() {
         welcomeMessage();
         execute();
     }
 
+    /**
+     * The welcome message when Simpletron is first started.
+     *
+     * @return void
+     */
     private void welcomeMessage() {
         System.out.println("***            Welcome to Simpletron!           ***");
         System.out.println("*** Please enter your program, one instruction  ***");
@@ -31,6 +47,10 @@ public class Simpletron {
         System.out.println("*** Type -99999 to stop entering your program.  ***");
     }
 
+    /*
+     * Same with the variables uptop, I'm not going to remove this one ether. 
+     * I just want to have to uncomment it, and the project will still work.
+     */
 //    private void execute() {
 //        Scanner codeInputter = new Scanner(System.in);
 //        int instructionInput = 0;
@@ -59,6 +79,12 @@ public class Simpletron {
 //        System.exit(0);
 //    }
     
+    /**
+     * The execute method will ask for
+     * <code>SML</code> and execute it word by word.
+     *
+     * @return void
+     */
     private void execute() {
         Scanner codeInput = new Scanner(System.in);
         int instructionInput;
@@ -83,6 +109,15 @@ public class Simpletron {
         System.exit(0);
     }
 
+    /**
+     * Using the
+     * <code>instructionRegister</code> var,
+     * <code>loadCode()</code> will determine what operation will be executed
+     * and which memory location it will need to access to complete that
+     * operation.
+     *
+     * @return void
+     */
     private void loadCode() {
 //        instructionRegister = memory[instructionCounter];
         instructionRegister = MainMemory.memory[instructionCounter];
@@ -91,6 +126,14 @@ public class Simpletron {
         operand = instructionRegister % 100;
     }
 
+    /**
+     * Once the operation and operand are determined by
+     * <code>loadCode()</code> they are executed.
+     *
+     * @param operationCode
+     * @param operand
+     * @return void
+     */
     private void operations(int operationCode, int operand) {
         boolean branching = false;
 
@@ -114,28 +157,24 @@ public class Simpletron {
             //Load the value found in memory into the accumulator
             case SimpletronOperationCodes.LOAD:
 //                accumulator = memory[operand];
-//                accumulator = MainMemory.memory[operand];
                 SimpletronAccumlator.acculator = MainMemory.memory[operand];
                 break;
 
             //Put the value in the accumlator in to memroy
             case SimpletronOperationCodes.STORE:
 //                memory[operand] = accumulator;
-//                MainMemory.memory[operand] = accumulator;
                 MainMemory.memory[operand] = SimpletronAccumlator.acculator;
                 break;
 
             //Add the value in the accumulator and a value from memroy
             case SimpletronOperationCodes.ADD:
 //                accumulator += memory[operand];
-//                accumulator += MainMemory.memory[operand];
                 SimpletronAccumlator.acculator += MainMemory.memory[operand];
                 break;
 
             //Subtract the value in the accumulator and a value in memory
             case SimpletronOperationCodes.SUBTRACT:
 //                accumulator -= memory[operand];
-//                accumulator -= MainMemory.memory[operand];
                 SimpletronAccumlator.acculator -= MainMemory.memory[operand];
                 break;
 
@@ -145,11 +184,10 @@ public class Simpletron {
 //                if (memory[operand] == 0) {
                 if (MainMemory.memory[operand] == 0) {
                     System.out.printf("\n%s\n%s\n", "*** CANNOT DIVIDE BY ZERO ***", "*** EXITING NOW ***");
-                    System.exit(0);
+                    System.exit(-1);
                 }
                 else {
 //                    accumulator /= memory[operand];
-//                    accumulator /= MainMemory.memory[operand];
                     SimpletronAccumlator.acculator /= MainMemory.memory[operand];
                     break;
                 }
@@ -157,7 +195,6 @@ public class Simpletron {
             //Mulitply the value in the accumulator by a value in memory
             case SimpletronOperationCodes.MULITPLY:
 //                accumulator *= memory[operand];
-//                accumulator *= MainMemory.memory[operand];
                 SimpletronAccumlator.acculator *= MainMemory.memory[operand];
                 break;
 
@@ -203,5 +240,27 @@ public class Simpletron {
         if (!branching) {
             instructionCounter++;
         }
-    }
+    } //End of operations method
+    
+//    /**
+//     * Outputs the values found in the
+//     * <code>memory</code>
+//     *
+//     * @return void
+//     */
+//    private static void memoryDump() {
+//        int tens, ones;
+//        
+//        System.out.printf("%s\t%04d\n", "Accumlator", acculator);
+//        
+//        System.out.printf("\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\n", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+//        
+//        for (tens = 0; tens < 100; tens += 10) {
+//            System.out.printf("%02d\t", tens);
+//            for (ones = 0; ones < 10; ones++) {
+//                System.out.printf("%04d\t", memory[tens + ones]);
+//            }
+//            System.out.println();
+//        }
+//    }
 }
