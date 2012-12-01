@@ -8,11 +8,12 @@ import java.util.Scanner;
  */
 public class Simpletron {
 
-    //private int[] memory = new int[100];
-    private int accumulator;
-    private int instructionCounter = 0;
-    private int instructionRegister = 0;
-    private int operationCode, operand;
+//    private int[] memory = new int[100];
+//    private int accumulator;
+    private int instructionCounter;
+    private int instructionRegister;
+    private int operationCode;
+    private int operand;
 
     private boolean run = true;
 
@@ -59,13 +60,13 @@ public class Simpletron {
 //    }
     
     private void execute() {
-        Scanner codeInputter = new Scanner(System.in);
+        Scanner codeInput = new Scanner(System.in);
         int instructionInput;
         //int memoryPointer = 0;
 
         do {
             System.out.printf("%02d ? ", MainMemory.memoryPointer);
-            instructionInput = codeInputter.nextInt();
+            instructionInput = codeInput.nextInt();
             MainMemory.memory[MainMemory.memoryPointer] = instructionInput;
             MainMemory.memoryPointer++;
         }
@@ -113,25 +114,29 @@ public class Simpletron {
             //Load the value found in memory into the accumulator
             case SimpletronOperationCodes.LOAD:
 //                accumulator = memory[operand];
-                accumulator = MainMemory.memory[operand];
+//                accumulator = MainMemory.memory[operand];
+                SimpletronAccumlator.acculator = MainMemory.memory[operand];
                 break;
 
             //Put the value in the accumlator in to memroy
             case SimpletronOperationCodes.STORE:
 //                memory[operand] = accumulator;
-                MainMemory.memory[operand] = accumulator;
+//                MainMemory.memory[operand] = accumulator;
+                MainMemory.memory[operand] = SimpletronAccumlator.acculator;
                 break;
 
             //Add the value in the accumulator and a value from memroy
             case SimpletronOperationCodes.ADD:
 //                accumulator += memory[operand];
-                accumulator += MainMemory.memory[operand];
+//                accumulator += MainMemory.memory[operand];
+                SimpletronAccumlator.acculator += MainMemory.memory[operand];
                 break;
 
             //Subtract the value in the accumulator and a value in memory
             case SimpletronOperationCodes.SUBTRACT:
 //                accumulator -= memory[operand];
-                accumulator -= MainMemory.memory[operand];
+//                accumulator -= MainMemory.memory[operand];
+                SimpletronAccumlator.acculator -= MainMemory.memory[operand];
                 break;
 
             //Divide the value in the accumulator by a value in memory
@@ -139,19 +144,21 @@ public class Simpletron {
                 //Can't divide by zero.
 //                if (memory[operand] == 0) {
                 if (MainMemory.memory[operand] == 0) {
-                    System.out.printf("\n%s\n%s\n", "*** CANNOT DIVIDE BY ZERO ***", "EXITING NOW ***");
+                    System.out.printf("\n%s\n%s\n", "*** CANNOT DIVIDE BY ZERO ***", "*** EXITING NOW ***");
                     System.exit(0);
                 }
                 else {
 //                    accumulator /= memory[operand];
-                    accumulator /= MainMemory.memory[operand];
+//                    accumulator /= MainMemory.memory[operand];
+                    SimpletronAccumlator.acculator /= MainMemory.memory[operand];
                     break;
                 }
 
             //Mulitply the value in the accumulator by a value in memory
             case SimpletronOperationCodes.MULITPLY:
 //                accumulator *= memory[operand];
-                accumulator *= MainMemory.memory[operand];
+//                accumulator *= MainMemory.memory[operand];
+                SimpletronAccumlator.acculator *= MainMemory.memory[operand];
                 break;
 
             //Branc to a specific memory location
@@ -161,19 +168,21 @@ public class Simpletron {
                 break;
 
             //Branch to a memory location if the accumulator is less than zero
-            case SimpletronOperationCodes.BRANCHING:
-                if (accumulator < 0) {
+            case SimpletronOperationCodes.BRANCHNEG:
+//                if (accumulator < 0) {
+                if (SimpletronAccumlator.acculator < 0) {
                     instructionCounter = operand;
+                    branching = true;
                 }
-                branching = true;
                 break;
 
             //Branch to a memroy location if the accumulator is zero
             case SimpletronOperationCodes.BRANCHZERO:
-                if (accumulator == 0) {
+//                if (accumulator == 0) {
+                if (SimpletronAccumlator.acculator == 0) {
                     instructionCounter = operand;
+                    branching = true;
                 }
-                branching = true;
                 break;
 
             //Finsh processing

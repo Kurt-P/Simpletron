@@ -5,13 +5,13 @@ package edu.KurtP.Simpletron;
  * @version 0.0.11272012
  */
 public class SimpletronAccumlator {
-    private static int acculator = 0;
+    protected static int acculator;
 
-    protected static int getAccumlator() {
-        return acculator;
-    }
-
-    protected static void setAcculator(int i) {
-        acculator = i;
-    }
+//    protected static int getAccumlator() {
+//        return acculator;
+//    }
+//
+//    protected static void setAcculator(int i) {
+//        acculator = i;
+//    }
 }

@@ -21,7 +21,7 @@ public class SimpletronOperationCodes {
 
     //Transfer of controle operations
     protected static final int BRANCH = 40;
-    protected static final int BRANCHING = 41;
+    protected static final int BRANCHNEG = 41;
     protected static final int BRANCHZERO = 42;
     protected static final int HALT = 43;
 
