@@ -1,6 +1,7 @@
 package edu.KurtP.Simpletron;
 
 import java.util.Scanner;
+import edu.KurtP.Simpletron.MainMemory;
 
 /**
  * @author kurtprudhomme
@@ -146,6 +147,7 @@ public class Simpletron {
             case SimpletronOperationCodes.HALT:
                 System.out.println("Processing complete...");
                 run = false;
+                edu.KurtP.Simpletron.MainMemory.memoryDump();
                 break;
 
         } //End switch

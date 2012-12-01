@@ -9,43 +9,16 @@ public class MainMemory {
     protected static int memoryPointer = 0;
 
     protected static void memoryDump() {
+        int tens, ones;
         
+        System.out.printf("\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t\n", "0","1", "2", "3", "4", "5", "6", "7", "8", "9");
+        
+        for (tens = 0; tens < 100; tens += 10) {
+            System.out.printf("%d\t", tens);
+            for (ones = 0; ones < 10; ones++) {
+                System.out.printf("%04d\t", memory[tens + ones]);
+            }
+            System.out.println();
+        }
     }
-
-//    protected MainMemory() {
-//        memory = new int[100];
-//    }
-
-//    protected static void incrementMemoryPointer() {
-//        memoryPointer++;
-//    }
-//
-//    /**
-//     * @return the memory
-//     */
-//    protected static int getMemoryFromLocation(int location) {
-//        return memory[location];
-//    }
-//
-//    /**
-//     * @param aMemory the memory to set
-//     */
-//    protected static void setMemoryAtLocation(int location, int value) {
-//        memory[location] = value;
-//    }
-//
-//    /**
-//     * @return the memoryPointer
-//     */
-//    protected static int getMemoryPointer() {
-//        return memoryPointer;
-//    }
-//
-//    protected static int getMemorySize() {
-//        return memory.length;
-//    }
-//
-//    protected static int[] getMemory() {
-//        return memory;
-//    }
 }
