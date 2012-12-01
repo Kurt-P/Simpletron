@@ -23,8 +23,7 @@ public class SimpletronTest {
     public static void run() {
         Simpletron s = new Simpletron();
 
-        s.welcomeMessage();
-        s.runSimpletron();
+        s.run();
     }
 
     public static void helpMessage() {

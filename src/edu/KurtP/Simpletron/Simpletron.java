@@ -1,7 +1,3 @@
-/*
- * This is my first draft for the Simpletron program that I need to do for a
- * class project.
- */
 package edu.KurtP.Simpletron;
 
 import java.util.Scanner;
@@ -13,17 +9,19 @@ import java.util.Scanner;
 public class Simpletron {
 
     private int[] memory = new int[100];
+    private int accumulator;
+    private int instructionCounter = 0;
+    private int instructionRegister = 0;
+    private int operationCode, operand;
 
     private boolean run = true;
 
-    private int accumulator = 0;
+    public void run() {
+        welcomeMessage();
+        execute();
+    }
 
-    private int instructionCounter = 0;
-    private int instructionRegister = 0;
-
-    private int operationCode, operand;
-
-    public void welcomeMessage() {
+    private void welcomeMessage() {
         System.out.println("***            Welcome to Simpletron!           ***");
         System.out.println("*** Please enter your program, one instruction  ***");
         System.out.println("*** (or data word) at a time. I will display    ***");
@@ -32,20 +30,10 @@ public class Simpletron {
         System.out.println("*** Type -99999 to stop entering your program.  ***");
     }
 
-    public void runSimpletron() {
+    private void execute() {
         Scanner codeInputter = new Scanner(System.in);
         int instructionInput = 0;
         int memoryPointer = 0;
-
-//        do {
-//            System.out.printf("%02d ? ", SimpletronInstructionRegulatiors.getInstructionCounter());
-//            instructionInput = codeInputter.nextInt();
-////            memory[memoryPointer] = instructionInput;
-//            MainMemory.setMemoryAtLocation(MainMemory.getMemoryPointer(), instructionInput);
-////            memoryPointer++;
-//            MainMemory.incrementMemoryPointer();
-//        }
-//        while (instructionInput != -99999);
 
         do {
             //Output the code input prompt
@@ -72,12 +60,9 @@ public class Simpletron {
 
     private void loadCode() {
         instructionRegister = memory[instructionCounter];
-//        operationCode = memory[SimpletronInstructionRegulatiors.getInstructionCounter()] / 100;
-//        operand = memory[SimpletronInstructionRegulatiors.getInstructionCounter()] % 100;
+
         operationCode = instructionRegister / 100;
         operand = instructionRegister % 100;
-//        operationCode = MainMemory.getMemoryFromLocation(instructionCounter) / 100;
-//        operand = MainMemory.getMemoryFromLocation(instructionCounter) % 100;
     }
 
     private void operations(int operationCode, int operand) {
@@ -91,13 +76,11 @@ public class Simpletron {
                 System.out.print("Enter a number: ");
                 int number = read.nextInt();
                 memory[operand] = number;
-//                MainMemory.setMemoryAtLocation(operand, number);
                 break;
 
             //Operations for outputting to the user
             case SimpletronOperationCodes.WRITE:
                 System.out.println(memory[operand]);
-//                System.out.println(MainMemory.getMemoryFromLocation(operand));
                 break;
 
             //Load the value found in memory into the accumulator
@@ -153,7 +136,7 @@ public class Simpletron {
 
             //Branch to a memroy location if the accumulator is zero
             case SimpletronOperationCodes.BRANCHZERO:
-                if(accumulator == 0) {
+                if (accumulator == 0) {
                     instructionCounter = operand;
                 }
                 branching = true;
@@ -162,26 +145,11 @@ public class Simpletron {
             //Finsh processing
             case SimpletronOperationCodes.HALT:
                 System.out.println("Processing complete...");
-//                System.exit(0);
                 run = false;
                 break;
 
-            case SimpletronOperationCodes.AND:
-                break;
-
-            case SimpletronOperationCodes.OR:
-                break;
-
-            case SimpletronOperationCodes.XOR:
-                break;
-
-//            default:
-//                System.out.println("*** INVALID OPERATION ***");
-//                System.out.println("***    EXITING NOW!   ***");
-//                System.exit(-1);
         } //End switch
 
-//        SimpletronInstructionRegulatiors.incrementInstructionCounter();
         /*
          * While I was testing, I noticed that if I neede to branch to a lower
          * memory location, the instruction counter would will increment. To
