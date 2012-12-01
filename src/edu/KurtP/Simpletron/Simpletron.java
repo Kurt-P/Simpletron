@@ -1,15 +1,14 @@
 package edu.KurtP.Simpletron;
 
 import java.util.Scanner;
-import edu.KurtP.Simpletron.MainMemory;
 
 /**
  * @author kurtprudhomme
- * @version 0.1.11292012
+ * @version 0.2.12012012
  */
 public class Simpletron {
 
-    private int[] memory = new int[100];
+    //private int[] memory = new int[100];
     private int accumulator;
     private int instructionCounter = 0;
     private int instructionRegister = 0;
@@ -31,20 +30,44 @@ public class Simpletron {
         System.out.println("*** Type -99999 to stop entering your program.  ***");
     }
 
+//    private void execute() {
+//        Scanner codeInputter = new Scanner(System.in);
+//        int instructionInput = 0;
+//        int memoryPointer = 0;
+//
+//        do {
+//            //Output the code input prompt
+//            System.out.printf("%02d ? ", memoryPointer);
+//            //Take the user input and assign it to the input var.
+//            instructionInput = codeInputter.nextInt();
+//            //place the input into the correct memory location
+//            memory[memoryPointer] = instructionInput;
+//            //Increment the pointer by one
+//            memoryPointer++;
+//        }
+//        while (instructionInput != -99999);
+//
+//        System.out.printf("\n%s\n%s\n\n", "***  Program loading complete ***",
+//                "*** Program excution begins ***");
+//
+//        while (run) {
+//            loadCode();
+//            operations(operationCode, operand);
+//        }
+//
+//        System.exit(0);
+//    }
+    
     private void execute() {
         Scanner codeInputter = new Scanner(System.in);
-        int instructionInput = 0;
-        int memoryPointer = 0;
+        int instructionInput;
+        //int memoryPointer = 0;
 
         do {
-            //Output the code input prompt
-            System.out.printf("%02d ? ", memoryPointer);
-            //Take the user input and assign it to the input var.
+            System.out.printf("%02d ? ", MainMemory.memoryPointer);
             instructionInput = codeInputter.nextInt();
-            //place the input into the correct memory location
-            memory[memoryPointer] = instructionInput;
-            //Increment the pointer by one
-            memoryPointer++;
+            MainMemory.memory[MainMemory.memoryPointer] = instructionInput;
+            MainMemory.memoryPointer++;
         }
         while (instructionInput != -99999);
 
@@ -60,7 +83,8 @@ public class Simpletron {
     }
 
     private void loadCode() {
-        instructionRegister = memory[instructionCounter];
+//        instructionRegister = memory[instructionCounter];
+        instructionRegister = MainMemory.memory[instructionCounter];
 
         operationCode = instructionRegister / 100;
         operand = instructionRegister % 100;
@@ -76,49 +100,58 @@ public class Simpletron {
                 Scanner read = new Scanner(System.in);
                 System.out.print("Enter a number: ");
                 int number = read.nextInt();
-                memory[operand] = number;
+//                memory[operand] = number;
+                MainMemory.memory[operand] = number;
                 break;
 
             //Operations for outputting to the user
             case SimpletronOperationCodes.WRITE:
-                System.out.println(memory[operand]);
+//                System.out.println(memory[operand]);
+                System.out.println(MainMemory.memory[operand]);
                 break;
 
             //Load the value found in memory into the accumulator
             case SimpletronOperationCodes.LOAD:
-                accumulator = memory[operand];
+//                accumulator = memory[operand];
+                accumulator = MainMemory.memory[operand];
                 break;
 
             //Put the value in the accumlator in to memroy
             case SimpletronOperationCodes.STORE:
-                memory[operand] = accumulator;
+//                memory[operand] = accumulator;
+                MainMemory.memory[operand] = accumulator;
                 break;
 
             //Add the value in the accumulator and a value from memroy
             case SimpletronOperationCodes.ADD:
-                accumulator += memory[operand];
+//                accumulator += memory[operand];
+                accumulator += MainMemory.memory[operand];
                 break;
 
             //Subtract the value in the accumulator and a value in memory
             case SimpletronOperationCodes.SUBTRACT:
-                accumulator -= memory[operand];
+//                accumulator -= memory[operand];
+                accumulator -= MainMemory.memory[operand];
                 break;
 
             //Divide the value in the accumulator by a value in memory
             case SimpletronOperationCodes.DIVIDE:
                 //Can't divide by zero.
-                if (memory[operand] == 0) {
+//                if (memory[operand] == 0) {
+                if (MainMemory.memory[operand] == 0) {
                     System.out.printf("\n%s\n%s\n", "*** CANNOT DIVIDE BY ZERO ***", "EXITING NOW ***");
                     System.exit(0);
                 }
                 else {
-                    accumulator /= memory[operand];
+//                    accumulator /= memory[operand];
+                    accumulator /= MainMemory.memory[operand];
                     break;
                 }
 
             //Mulitply the value in the accumulator by a value in memory
             case SimpletronOperationCodes.MULITPLY:
-                accumulator *= memory[operand];
+//                accumulator *= memory[operand];
+                accumulator *= MainMemory.memory[operand];
                 break;
 
             //Branc to a specific memory location
@@ -147,7 +180,7 @@ public class Simpletron {
             case SimpletronOperationCodes.HALT:
                 System.out.println("Processing complete...");
                 run = false;
-                edu.KurtP.Simpletron.MainMemory.memoryDump();
+                MainMemory.memoryDump();
                 break;
 
         } //End switch
