@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 /**
  * @author kurtprudhomme
- * @version 0.2.1.12012012
+ * @version 0.2.3.12032012
  */
-public class Simpletron {
+public class Simpletron extends SimpletronOperationCodes {
 
     /*
-     * I'm keeping these variables, so that later when this assignment is done 
-     * I can come back, remove the unneeded classes and still have a working 
+     * I'm keeping these variables, so that later when this assignment is done
+     * I can come back, remove the unneeded classes and still have a working
      * project.
      */
 //    private int[] memory = new int[100];
@@ -48,7 +48,7 @@ public class Simpletron {
     }
 
     /*
-     * Same with the variables uptop, I'm not going to remove this one ether. 
+     * Same with the variables uptop, I'm not going to remove this one ether.
      * I just want to have to uncomment it, and the project will still work.
      */
 //    private void execute() {
@@ -78,7 +78,7 @@ public class Simpletron {
 //
 //        System.exit(0);
 //    }
-    
+
     /**
      * The execute method will ask for
      * <code>SML</code> and execute it word by word.
@@ -98,8 +98,8 @@ public class Simpletron {
         }
         while (instructionInput != -99999);
 
-        System.out.printf("\n%s\n%s\n\n", "***  Program loading complete ***",
-                "*** Program excution begins ***");
+        System.out.printf("\n%s\n%s\n\n", "*** Program loading complete ***",
+                "*** Program excution begins  ***");
 
         while (run) {
             loadCode();
@@ -140,7 +140,7 @@ public class Simpletron {
         switch (operationCode) { //Start switch
 
             //Operations for reading input from the user
-            case SimpletronOperationCodes.READ:
+            case READ:
                 Scanner read = new Scanner(System.in);
                 System.out.print("Enter a number: ");
                 int number = read.nextInt();
@@ -149,37 +149,37 @@ public class Simpletron {
                 break;
 
             //Operations for outputting to the user
-            case SimpletronOperationCodes.WRITE:
+            case WRITE:
 //                System.out.println(memory[operand]);
                 System.out.println(MainMemory.memory[operand]);
                 break;
 
             //Load the value found in memory into the accumulator
-            case SimpletronOperationCodes.LOAD:
+            case LOAD:
 //                accumulator = memory[operand];
                 SimpletronAccumlator.acculator = MainMemory.memory[operand];
                 break;
 
             //Put the value in the accumlator in to memroy
-            case SimpletronOperationCodes.STORE:
+            case STORE:
 //                memory[operand] = accumulator;
                 MainMemory.memory[operand] = SimpletronAccumlator.acculator;
                 break;
 
             //Add the value in the accumulator and a value from memroy
-            case SimpletronOperationCodes.ADD:
+            case ADD:
 //                accumulator += memory[operand];
                 SimpletronAccumlator.acculator += MainMemory.memory[operand];
                 break;
 
             //Subtract the value in the accumulator and a value in memory
-            case SimpletronOperationCodes.SUBTRACT:
+            case SUBTRACT:
 //                accumulator -= memory[operand];
                 SimpletronAccumlator.acculator -= MainMemory.memory[operand];
                 break;
 
             //Divide the value in the accumulator by a value in memory
-            case SimpletronOperationCodes.DIVIDE:
+            case DIVIDE:
                 //Can't divide by zero.
 //                if (memory[operand] == 0) {
                 if (MainMemory.memory[operand] == 0) {
@@ -193,19 +193,19 @@ public class Simpletron {
                 }
 
             //Mulitply the value in the accumulator by a value in memory
-            case SimpletronOperationCodes.MULITPLY:
+            case MULITPLY:
 //                accumulator *= memory[operand];
                 SimpletronAccumlator.acculator *= MainMemory.memory[operand];
                 break;
 
             //Branc to a specific memory location
-            case SimpletronOperationCodes.BRANCH:
+            case BRANCH:
                 instructionCounter = operand;
                 branching = true;
                 break;
 
             //Branch to a memory location if the accumulator is less than zero
-            case SimpletronOperationCodes.BRANCHNEG:
+            case BRANCHNEG:
 //                if (accumulator < 0) {
                 if (SimpletronAccumlator.acculator < 0) {
                     instructionCounter = operand;
@@ -214,7 +214,7 @@ public class Simpletron {
                 break;
 
             //Branch to a memroy location if the accumulator is zero
-            case SimpletronOperationCodes.BRANCHZERO:
+            case BRANCHZERO:
 //                if (accumulator == 0) {
                 if (SimpletronAccumlator.acculator == 0) {
                     instructionCounter = operand;
@@ -223,7 +223,7 @@ public class Simpletron {
                 break;
 
             //Finsh processing
-            case SimpletronOperationCodes.HALT:
+            case HALT:
                 System.out.println("Processing complete...");
                 run = false;
                 MainMemory.memoryDump();
@@ -241,7 +241,7 @@ public class Simpletron {
             instructionCounter++;
         }
     } //End of operations method
-    
+
 //    /**
 //     * Outputs the values found in the
 //     * <code>memory</code>
@@ -250,11 +250,11 @@ public class Simpletron {
 //     */
 //    private static void memoryDump() {
 //        int tens, ones;
-//        
+//
 //        System.out.printf("%s\t%04d\n", "Accumlator", acculator);
-//        
+//
 //        System.out.printf("\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\n", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-//        
+//
 //        for (tens = 0; tens < 100; tens += 10) {
 //            System.out.printf("%02d\t", tens);
 //            for (ones = 0; ones < 10; ones++) {

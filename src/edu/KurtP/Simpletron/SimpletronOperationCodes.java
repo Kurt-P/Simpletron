@@ -2,9 +2,9 @@ package edu.KurtP.Simpletron;
 
 /**
  * @author Kurt P
- * @version 1.0.11292012
+ * @version 1.1.12032012
  */
-public class SimpletronOperationCodes {
+public abstract class SimpletronOperationCodes {
     //Read and write operations
     protected static final int READ = 10;
     protected static final int WRITE = 11;
