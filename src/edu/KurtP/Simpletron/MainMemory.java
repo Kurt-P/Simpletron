@@ -30,27 +30,4 @@ public class MainMemory {
             System.out.println();
         }
     }
-
-//    protected static void memoryDump() {
-//        for (int i = 0; i < 10; i++) {
-//            System.out.printf("%2d", i);
-//        }
-//
-//        System.out.println();
-//        int counter = 0;
-//
-//        for (int i = 0; i < 10; i++) {
-//            if (counter % 10 == 0) {
-//                System.out.printf("%02d ", counter);
-//            }
-//            for (int j = 0; j < 10; j++) {
-//                System.out.printf("%2d ", memory[counter]);
-//                counter++;
-//
-//            }
-//
-//            System.out.println();
-//
-//        }
-//    }
 }
