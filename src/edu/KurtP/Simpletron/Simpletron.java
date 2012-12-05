@@ -15,8 +15,8 @@ public class Simpletron extends SimpletronOperationCodes {
      */
 //    private int[] memory = new int[100];
 //    private int accumulator;
-    private int instructionCounter;
-    private int instructionRegister;
+//    private int instructionCounter;
+//    private int instructionRegister;
     private int operationCode;
     private int operand;
     private boolean run = true;
@@ -120,10 +120,15 @@ public class Simpletron extends SimpletronOperationCodes {
      */
     private void loadCode() {
 //        instructionRegister = memory[instructionCounter];
-        instructionRegister = MainMemory.memory[instructionCounter];
-
-        operationCode = instructionRegister / 100;
-        operand = instructionRegister % 100;
+//        instructionRegister = MainMemory.memory[instructionCounter];
+//
+//        operationCode = instructionRegister / 100;
+//        operand = instructionRegister % 100;
+        
+        SimpletronInstructionRegulatiors.instructionRegister = MainMemory.memory[SimpletronInstructionRegulatiors.instructionCounter];
+        
+        operationCode = SimpletronInstructionRegulatiors.instructionRegister / 100;
+        operand = SimpletronInstructionRegulatiors.instructionRegister % 100;
     }
 
     /**
@@ -200,7 +205,8 @@ public class Simpletron extends SimpletronOperationCodes {
 
             //Branc to a specific memory location
             case BRANCH:
-                instructionCounter = operand;
+                //instructionCounter = operand;
+                SimpletronInstructionRegulatiors.instructionCounter = operand;
                 branching = true;
                 break;
 
@@ -208,7 +214,8 @@ public class Simpletron extends SimpletronOperationCodes {
             case BRANCHNEG:
 //                if (accumulator < 0) {
                 if (SimpletronAccumlator.acculator < 0) {
-                    instructionCounter = operand;
+//                    instructionCounter = operand;
+                    SimpletronInstructionRegulatiors.instructionCounter = operand;
                     branching = true;
                 }
                 break;
@@ -217,7 +224,8 @@ public class Simpletron extends SimpletronOperationCodes {
             case BRANCHZERO:
 //                if (accumulator == 0) {
                 if (SimpletronAccumlator.acculator == 0) {
-                    instructionCounter = operand;
+//                    instructionCounter = operand;
+                    SimpletronInstructionRegulatiors.instructionCounter = operand;
                     branching = true;
                 }
                 break;
@@ -238,7 +246,8 @@ public class Simpletron extends SimpletronOperationCodes {
          * Simpletron is not branching, will the counter increment.
          */
         if (!branching) {
-            instructionCounter++;
+//            instructionCounter++;
+            SimpletronInstructionRegulatiors.instructionCounter++;
         }
     } //End of operations method
 
