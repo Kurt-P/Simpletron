@@ -18,7 +18,12 @@ public class MainMemory {
     protected static void memoryDump() {
         int tens, ones;
 
+        System.out.printf("\n%s\n", "*** Simpletron Memory Dump ***");
         System.out.printf("%s:\t%04d\n", "Accumlator", SimpletronAccumlator.acculator);
+        System.out.printf("%s:\t%04d\n", "Instruction Counter" , SimpletronInstructionRegulatiors.instructionCounter);
+        System.out.printf("%s:\t%04d\n", "Instruction Register" , SimpletronInstructionRegulatiors.instructionRegister);
+        
+        System.out.println();
 
         System.out.printf("\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\t%02d\n", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
