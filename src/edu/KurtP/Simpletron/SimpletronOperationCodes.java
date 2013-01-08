@@ -2,7 +2,7 @@ package edu.KurtP.Simpletron;
 
 /**
  * @author Kurt P
- * @version 1.1.12032012
+ * @version 1.0.0.01082013
  */
 public abstract class SimpletronOperationCodes {
     //Read and write operations
